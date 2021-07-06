@@ -1,4 +1,4 @@
-package com.gogoaren.indarra.servicecountry.weather;
+package com.gogoaren.indarra.servicecountry.weather.web.client;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
