@@ -37,6 +37,19 @@ public class CountryController {
         return "gui";
     }
 
+    @GetMapping(value = "/{name}")
+    public String getAllDataByCountryNameOrCountryCode(@PathVariable String name, Model model) {
+
+        String countryCode;
+
+        if (name.length()>3) countryCode = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
+        else countryCode = name;
+
+        createGui(countryCode, model);
+
+        return "gui";
+    }
+
     private void createGui(String code, Model model) {
         TCountryInfo countryData = client.getAllData(code).getFullCountryInfoResult();
         Weather weatherForCapitalCity = weatherFetcher.getCountry(countryData.getSCapitalCity());
