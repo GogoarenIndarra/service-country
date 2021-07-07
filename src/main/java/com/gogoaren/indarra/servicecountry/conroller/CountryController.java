@@ -25,7 +25,6 @@ public class CountryController {
 
         String code = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
         createGui(code, model);
-
         return "gui";
     }
 
@@ -33,7 +32,6 @@ public class CountryController {
     public String getCountryAllDataByCountryCode(@PathVariable String code, Model model) {
 
         createGui(code, model);
-
         return "gui";
     }
 
@@ -46,7 +44,6 @@ public class CountryController {
         else countryCode = name;
 
         createGui(countryCode, model);
-
         return "gui";
     }
 
