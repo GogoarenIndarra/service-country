@@ -1,11 +1,14 @@
 package com.gogoaren.indarra.servicecountry.country;
 
+import com.gogoaren.indarra.servicecountry.exception.CountryClientException;
 import com.gogoaren.indarra.servicecountry.ws.client.gen.CountryISOCode;
 import com.gogoaren.indarra.servicecountry.ws.client.gen.CountryISOCodeResponse;
 import com.gogoaren.indarra.servicecountry.ws.client.gen.FullCountryInfo;
 import com.gogoaren.indarra.servicecountry.ws.client.gen.FullCountryInfoResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 
+@Slf4j
 public class CountryClient extends WebServiceGatewaySupport {
 
 
@@ -13,19 +16,26 @@ public class CountryClient extends WebServiceGatewaySupport {
 
         FullCountryInfo request = new FullCountryInfo();
         request.setSCountryISOCode(country);
-        FullCountryInfoResponse response =
-                (FullCountryInfoResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+        try {
+            return (FullCountryInfoResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+        } catch (Exception e) {
+            log.error("Could not fetch country information. Exception message: {}", e.toString());
+            throw new CountryClientException(e.getMessage());
+        }
 
-        return response;
     }
 
     public CountryISOCodeResponse getIsoCodeFromCountryName(String country) {
 
         CountryISOCode request = new CountryISOCode();
         request.setSCountryName(country);
-        CountryISOCodeResponse response =
-                (CountryISOCodeResponse) getWebServiceTemplate().marshalSendAndReceive(request);
 
-        return response;
+        try {
+            return (CountryISOCodeResponse) getWebServiceTemplate().marshalSendAndReceive(request);
+        } catch (Exception e) {
+            log.error("Could not fetch country information. Exception message: {}", e.toString());
+            throw new CountryClientException(e.getMessage());
+        }
+
     }
 }

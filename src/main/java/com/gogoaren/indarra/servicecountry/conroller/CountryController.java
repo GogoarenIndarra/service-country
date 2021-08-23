@@ -1,6 +1,9 @@
 package com.gogoaren.indarra.servicecountry.conroller;
 
 import com.gogoaren.indarra.servicecountry.country.CountryClient;
+import com.gogoaren.indarra.servicecountry.exception.CountryClientException;
+import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateFetcher;
+import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateResponse;
 import com.gogoaren.indarra.servicecountry.weather.web.client.Weather;
 import com.gogoaren.indarra.servicecountry.weather.web.client.WeatherFetcher;
 import com.gogoaren.indarra.servicecountry.ws.client.gen.TCountryInfo;
@@ -48,8 +51,17 @@ public class CountryController {
     }
 
     private void createGui(String code, Model model) {
-        TCountryInfo countryData = client.getAllData(code).getFullCountryInfoResult();
-        Weather weatherForCapitalCity = weatherFetcher.getCountry(countryData.getSCapitalCity());
+        TCountryInfo countryData;
+        Weather weatherForCapitalCity;
+
+        try {
+            countryData = client.getAllData(code).getFullCountryInfoResult();
+            weatherForCapitalCity = weatherFetcher.getCountry(countryData.getSCapitalCity());
+        } catch (CountryClientException countryClientException) {
+            log.error("Could not fetch country information. Exception message: {}", countryClientException.toString());
+//            model.addAllAttributes("message", "dfd");//error message here
+            return;
+        }
 
         model.addAttribute("name", countryData.getSName());
         model.addAttribute("flag", countryData.getSCountryFlag());
