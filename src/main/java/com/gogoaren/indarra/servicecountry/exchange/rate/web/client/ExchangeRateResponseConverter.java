@@ -9,7 +9,8 @@ public class ExchangeRateResponseConverter {
                 .timestamp(exchangeRateResponse.getTimestamp())
                 .base(exchangeRateResponse.getBase())
                 .date(exchangeRateResponse.getDate())
-                .rates(exchangeRateResponse.getRates())
+                .countryCode(exchangeRateResponse.getRates().entrySet().stream().findFirst().get().getKey())
+                .rate(exchangeRateResponse.getRates().entrySet().stream().findFirst().get().getValue())
                 .build();
     }
 }

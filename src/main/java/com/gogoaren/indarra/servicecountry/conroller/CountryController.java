@@ -4,7 +4,6 @@ import com.gogoaren.indarra.servicecountry.country.CountryClient;
 import com.gogoaren.indarra.servicecountry.exception.CountryClientException;
 import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRate;
 import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateFetcher;
-import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateResponse;
 import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateResponseConverter;
 import com.gogoaren.indarra.servicecountry.weather.web.client.Weather;
 import com.gogoaren.indarra.servicecountry.weather.web.client.WeatherFetcher;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
@@ -28,11 +26,11 @@ public class CountryController {
     ExchangeRateFetcher exchangeRateFetcher;
     ExchangeRateResponseConverter exchangeRateResponseConverter;
 
-//    @GetMapping(value = "/rate/{isoCode}")
-//    public ExchangeRate getExchangeRate(@PathVariable String isoCode) {
-//        return exchangeRateResponseConverter
-//                .convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(isoCode));
-//    }
+    @GetMapping(value = "/rate/{isoCode}")
+    public ExchangeRate getExchangeRate(@PathVariable String isoCode) {
+        return exchangeRateResponseConverter
+                .convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(isoCode));
+    }
 
 
     @GetMapping(value = "/countryName/{name}")
