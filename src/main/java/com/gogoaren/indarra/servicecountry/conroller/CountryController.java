@@ -2,8 +2,10 @@ package com.gogoaren.indarra.servicecountry.conroller;
 
 import com.gogoaren.indarra.servicecountry.country.CountryClient;
 import com.gogoaren.indarra.servicecountry.exception.CountryClientException;
+import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRate;
 import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateFetcher;
 import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateResponse;
+import com.gogoaren.indarra.servicecountry.exchange.rate.web.client.ExchangeRateResponseConverter;
 import com.gogoaren.indarra.servicecountry.weather.web.client.Weather;
 import com.gogoaren.indarra.servicecountry.weather.web.client.WeatherFetcher;
 import com.gogoaren.indarra.servicecountry.ws.client.gen.TCountryInfo;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @AllArgsConstructor
@@ -22,6 +25,15 @@ public class CountryController {
 
     CountryClient client;
     WeatherFetcher weatherFetcher;
+    ExchangeRateFetcher exchangeRateFetcher;
+    ExchangeRateResponseConverter exchangeRateResponseConverter;
+
+//    @GetMapping(value = "/rate/{isoCode}")
+//    public ExchangeRate getExchangeRate(@PathVariable String isoCode) {
+//        return exchangeRateResponseConverter
+//                .convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(isoCode));
+//    }
+
 
     @GetMapping(value = "/countryName/{name}")
     public String getCountryAllDataByCountryName(@PathVariable String name, Model model) {
@@ -43,7 +55,7 @@ public class CountryController {
 
         String countryCode;
 
-        if (name.length()>3) countryCode = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
+        if (name.length() > 3) countryCode = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
         else countryCode = name;
 
         createGui(countryCode, model);
@@ -71,6 +83,8 @@ public class CountryController {
         model.addAttribute("ISOCode", countryData.getSCurrencyISOCode());
         model.addAttribute("SISOCode", countryData.getSISOCode());
         model.addAttribute("PhonePrefix", countryData.getSPhoneCode());
+        model.addAttribute("ExchangeRate", exchangeRateResponseConverter
+                .convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(countryData.getSCurrencyISOCode())));
     }
 
 }
