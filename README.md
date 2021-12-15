@@ -1,14 +1,19 @@
+# service-country
 # service description
 
-Service provide base information about country at endpoint:
+Service provide:  
+* base information about country, from SOAP service
+* Weather information via Rest
+* Exchange rates
 
-http://localhost:7000/{Country}
-http://localhost:7000/{CountryCode}
+
+
 
 
 Source on information:
 - soap service difined by wsdl file: [link](http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso?WSDL)
 - [weather-service](https://github.com/GogoarenIndarra/service-weather)
+- [exchange rates](http://data.fixer.io)
 
 
 # learning resources
