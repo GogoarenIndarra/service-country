@@ -13,12 +13,12 @@ public class ExchangeRateFetcher {
 
     private final WebClient client;
     private final String apiKey;
-
+    private final String path;
 
     public ExchangeRateResponse fetchExchangeRateByCountryCode(String countryCode) {
 
         var response = client.get()
-                .uri(uriBuilder -> uriBuilder.path("")
+                .uri(uriBuilder -> uriBuilder.path(path)
                         .queryParam("access_key", apiKey)
                         .queryParam("symbols", countryCode)
                         .build())
@@ -29,6 +29,5 @@ public class ExchangeRateFetcher {
                 .block(Duration.ofSeconds(200));
         log.info("Exchange Rate Response for Country Code: " + countryCode + " Response: " + response);
         return response;
-
     }
 }

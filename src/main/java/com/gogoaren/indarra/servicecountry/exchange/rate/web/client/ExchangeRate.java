@@ -5,7 +5,6 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
-
 @Data
 @Builder
 public class ExchangeRate {
@@ -16,6 +15,4 @@ public class ExchangeRate {
     private String date;
     private String countryCode;
     private BigDecimal rate;
-
-
 }

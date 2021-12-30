@@ -1,0 +1,33 @@
+spring:
+  profiles:
+    active: dev
+---
+# DEV - properties
+spring:
+  config:
+    activate:
+      on-profile: dev
+weather:
+  service:
+    endpoint: http://localhost:8000/api/weather
+exchange:
+  key: 17c6e39e245aad7a6b5431581fee7e14
+  url: http://data.fixer.io
+  path: /api/latest
+server:
+  port: 7000
+---
+#TEST - properties
+spring:
+  config:
+    activate:
+      on-profile: test
+weather:
+  service:
+    endpoint: http://localhost:8000/api/weather
+exchange:
+  key: secretKey
+  url: http://localhost:7001/
+  path: /api/latest
+server:
+  port: 7001

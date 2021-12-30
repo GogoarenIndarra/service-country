@@ -15,5 +15,5 @@ public class ExchangeProperties {
 
     private String key;
     private String url;
-
+    private String path;
 }
