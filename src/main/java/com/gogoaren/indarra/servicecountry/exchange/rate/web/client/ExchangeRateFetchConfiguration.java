@@ -22,7 +22,7 @@ public class ExchangeRateFetchConfiguration {
                 .defaultCookie("cookieKey", "cookieValue")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
-        return new ExchangeRateFetcher(client, exchangeProperties.getKey());
+        return new ExchangeRateFetcher(client, exchangeProperties.getKey(), exchangeProperties.getPath());
     }
 
     @Bean
@@ -30,4 +30,3 @@ public class ExchangeRateFetchConfiguration {
         return new ExchangeRateResponseConverter();
     }
 }
-

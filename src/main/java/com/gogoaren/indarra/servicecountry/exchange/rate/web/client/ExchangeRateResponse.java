@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Map;
 
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -26,8 +25,6 @@ public class ExchangeRateResponse {
     public String date;
     @JsonProperty("rates")
     public Map<String, BigDecimal> rates;
-
-
 }
 
 
