@@ -13,7 +13,6 @@ public class FetchWeatherConfiguration {
 
     @Bean
     WebClient getWebClient() {
-
         return WebClient.builder()
                 .baseUrl("http://localhost:8000/api/weather")
                 .defaultCookie("cookieKey", "cookieValue")

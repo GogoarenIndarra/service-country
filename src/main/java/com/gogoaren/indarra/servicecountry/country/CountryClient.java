@@ -12,9 +12,9 @@ import org.springframework.ws.client.core.support.WebServiceGatewaySupport;
 public class CountryClient extends WebServiceGatewaySupport {
 
 
-    public FullCountryInfoResponse getAllData(String country) {
+    public FullCountryInfoResponse getAllData(final String country) {
 
-        FullCountryInfo request = new FullCountryInfo();
+        final FullCountryInfo request = new FullCountryInfo();
         request.setSCountryISOCode(country);
         try {
             return (FullCountryInfoResponse) getWebServiceTemplate().marshalSendAndReceive(request);
@@ -22,20 +22,16 @@ public class CountryClient extends WebServiceGatewaySupport {
             log.error("Could not fetch country information. Exception message: {}", e.toString());
             throw new CountryClientException(e.getMessage());
         }
-
     }
 
-    public CountryISOCodeResponse getIsoCodeFromCountryName(String country) {
-
-        CountryISOCode request = new CountryISOCode();
+    public CountryISOCodeResponse getIsoCodeFromCountryName(final String country) {
+        final CountryISOCode request = new CountryISOCode();
         request.setSCountryName(country);
-
         try {
             return (CountryISOCodeResponse) getWebServiceTemplate().marshalSendAndReceive(request);
         } catch (Exception e) {
             log.error("Could not fetch country information. Exception message: {}", e.toString());
             throw new CountryClientException(e.getMessage());
         }
-
     }
 }

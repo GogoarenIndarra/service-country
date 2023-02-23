@@ -17,7 +17,7 @@ public class ExchangeRateFetchConfiguration {
 
     @Bean
     ExchangeRateFetcher rateFetcher() {
-        WebClient client = WebClient.builder()
+        final WebClient client = WebClient.builder()
                 .baseUrl(exchangeProperties.getUrl())
                 .defaultCookie("cookieKey", "cookieValue")
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)

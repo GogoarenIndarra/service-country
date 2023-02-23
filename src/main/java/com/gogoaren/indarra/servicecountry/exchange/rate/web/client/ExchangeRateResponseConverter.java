@@ -2,7 +2,7 @@ package com.gogoaren.indarra.servicecountry.exchange.rate.web.client;
 
 public class ExchangeRateResponseConverter {
 
-    public ExchangeRate convert(ExchangeRateResponse exchangeRateResponse) {
+    public ExchangeRate convert(final ExchangeRateResponse exchangeRateResponse) {
 
         return ExchangeRate.builder()
                 .success(exchangeRateResponse.getSuccess())

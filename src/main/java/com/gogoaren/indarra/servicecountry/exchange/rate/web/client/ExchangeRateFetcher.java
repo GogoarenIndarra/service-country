@@ -15,9 +15,9 @@ public class ExchangeRateFetcher {
     private final String apiKey;
     private final String path;
 
-    public ExchangeRateResponse fetchExchangeRateByCountryCode(String countryCode) {
+    public ExchangeRateResponse fetchExchangeRateByCountryCode(final String countryCode) {
 
-        var response = client.get()
+        final var response = client.get()
                 .uri(uriBuilder -> uriBuilder.path(path)
                         .queryParam("access_key", apiKey)
                         .queryParam("symbols", countryCode)
@@ -26,8 +26,8 @@ public class ExchangeRateFetcher {
                 .retrieve()
                 .bodyToMono(ExchangeRateResponse.class)
                 .share()
-                .block(Duration.ofSeconds(200));
-        log.info("Exchange Rate Response for Country Code: " + countryCode + " Response: " + response);
+                .block(Duration.ofSeconds(20));
+        log.info("Exchange Rate Response for Country Code: {}, Response: {}", countryCode, response);
         return response;
     }
 }

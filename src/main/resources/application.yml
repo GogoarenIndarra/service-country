@@ -11,7 +11,7 @@ weather:
   service:
     endpoint: http://localhost:8000/api/weather
 exchange:
-  key: 17c6e39e245aad7a6b5431581fee7e14
+  key: eLv5iCMgIh7m0o8X0eM20pdU0XjFFdBI
   url: http://data.fixer.io
   path: /api/latest
 server:
@@ -24,7 +24,7 @@ spring:
       on-profile: test
 weather:
   service:
-    endpoint: http://localhost:8000/api/weather
+    endpoint: http://localhost:7001/api/weather
 exchange:
   key: secretKey
   url: http://localhost:7001/

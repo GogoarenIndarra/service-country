@@ -20,50 +20,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 @Slf4j
 public class CountryController {
 
-
     CountryClient client;
     WeatherFetcher weatherFetcher;
     ExchangeRateFetcher exchangeRateFetcher;
     ExchangeRateResponseConverter exchangeRateResponseConverter;
 
     @GetMapping(value = "/rate/{isoCode}")
-    public ExchangeRate getExchangeRate(@PathVariable String isoCode) {
-        return exchangeRateResponseConverter
-                .convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(isoCode));
+    public ExchangeRate getExchangeRate(@PathVariable final String isoCode) {
+        return exchangeRateResponseConverter.convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(isoCode));
     }
 
-
     @GetMapping(value = "/countryName/{name}")
-    public String getCountryAllDataByCountryName(@PathVariable String name, Model model) {
-
-        String code = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
+    public String getCountryAllDataByCountryName(@PathVariable final String name, final Model model) {
+        final String code = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
         createGui(code, model);
         return "gui";
     }
 
     @GetMapping(value = "/countryIsoCode/{code}")
-    public String getCountryAllDataByCountryCode(@PathVariable String code, Model model) {
-
+    public String getCountryAllDataByCountryCode(@PathVariable final String code, final Model model) {
         createGui(code, model);
         return "gui";
     }
 
     @GetMapping(value = "/{name}")
-    public String getAllDataByCountryNameOrCountryCode(@PathVariable String name, Model model) {
-
+    public String getAllDataByCountryNameOrCountryCode(@PathVariable final String name, final Model model) {
         String countryCode;
-
-        if (name.length() > 3) countryCode = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
-        else countryCode = name;
-
+        if (name.length() > 3) {
+            countryCode = client.getIsoCodeFromCountryName(name).getCountryISOCodeResult();
+        } else {
+            countryCode = name;
+        }
         createGui(countryCode, model);
         return "gui";
     }
 
-    private void createGui(String code, Model model) {
+    private void createGui(final String code, final Model model) {
         TCountryInfo countryData;
         Weather weatherForCapitalCity;
-
         try {
             countryData = client.getAllData(code).getFullCountryInfoResult();
             weatherForCapitalCity = weatherFetcher.getCountry(countryData.getSCapitalCity());
@@ -72,7 +66,6 @@ public class CountryController {
 //            model.addAllAttributes("message", "dfd");//error message here
             return;
         }
-
         model.addAttribute("name", countryData.getSName());
         model.addAttribute("flag", countryData.getSCountryFlag());
         model.addAttribute("capital", countryData.getSCapitalCity());
@@ -81,8 +74,7 @@ public class CountryController {
         model.addAttribute("ISOCode", countryData.getSCurrencyISOCode());
         model.addAttribute("SISOCode", countryData.getSISOCode());
         model.addAttribute("PhonePrefix", countryData.getSPhoneCode());
-        model.addAttribute("ExchangeRate", exchangeRateResponseConverter
-                .convert(exchangeRateFetcher.fetchExchangeRateByCountryCode(countryData.getSCurrencyISOCode())));
+        model.addAttribute("ExchangeRate", exchangeRateResponseConverter.convert(
+                exchangeRateFetcher.fetchExchangeRateByCountryCode(countryData.getSCurrencyISOCode())));
     }
-
 }

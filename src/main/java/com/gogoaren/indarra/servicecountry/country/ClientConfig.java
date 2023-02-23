@@ -7,17 +7,20 @@ import org.springframework.oxm.jaxb.Jaxb2Marshaller;
 @Configuration
 public class ClientConfig {
 
+    private static final String CONTEXT_PATH = "com.gogoaren.indarra.servicecountry.ws.client.gen";
+    private static final String DEFAULT_URI = "http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso";
+
     @Bean
     public Jaxb2Marshaller marshaller() {
-        Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
-        marshaller.setContextPath("com.gogoaren.indarra.servicecountry.ws.client.gen");
+        final Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
+        marshaller.setContextPath(CONTEXT_PATH);
         return marshaller;
     }
 
     @Bean
-    public CountryClient countryFullResponseClient(Jaxb2Marshaller marshaller) {
-        CountryClient client = new CountryClient();
-        client.setDefaultUri("http://webservices.oorsprong.org/websamples.countryinfo/CountryInfoService.wso");
+    public CountryClient countryFullResponseClient(final Jaxb2Marshaller marshaller) {
+        final CountryClient client = new CountryClient();
+        client.setDefaultUri(DEFAULT_URI);
         client.setMarshaller(marshaller);
         client.setUnmarshaller(marshaller);
         return client;
